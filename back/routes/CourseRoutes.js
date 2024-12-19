@@ -1,0 +1,14 @@
+const express = require("express");
+const {userAuth,isAdmin} = require("../middelwares/authMiddleware.js");
+const { createCourse,addCourse,getAllCourse,getById,DeleteList } = require("../Controllers/CourseController.js");
+const {fetchList,fetchAllList} = require("../Controllers/ListController.js");
+const {upload} = require("../middelwares/multer.js");
+const router = express.Router();
+router.post("/create-course",userAuth,isAdmin,upload.single("img"),createCourse);
+router.post("/add-course/:id",userAuth,isAdmin,upload.single("img"),addCourse);
+router.get("/All",getAllCourse);
+router.get("/get-Courses/:id",getById);
+router.get("/get-List/:id",userAuth,fetchList);
+router.get("/List/:id",userAuth,fetchAllList);
+router.delete("/Play-list/:id",userAuth,isAdmin,DeleteList);
+module.exports = router;
